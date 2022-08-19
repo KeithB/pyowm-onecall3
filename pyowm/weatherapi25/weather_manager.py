@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Union
 
 from pyowm.commons.http_client import HttpClient
-from pyowm.constants import WEATHER_API_VERSION
+from pyowm.constants import WEATHER_API_VERSION, ONECALL_API_VERSION
 from pyowm.utils import geo
 from pyowm.weatherapi25 import forecaster, historian, observation, forecast, stationhistory, one_call
 from pyowm.weatherapi25.uris import ROOT_WEATHER_API, OBSERVATION_URI, GROUP_OBSERVATIONS_URI, FIND_OBSERVATIONS_URI, \
@@ -33,6 +33,9 @@ class WeatherManager:
 
     def weather_api_version(self):
         return WEATHER_API_VERSION
+
+    def onecall_api_version(self):
+        return ONECALL_API_VERSION
 
     def weather_at_place(self, name):
         """

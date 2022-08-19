@@ -81,7 +81,14 @@ class OneCall:
                 raise exceptions.APIResponseError("OWM API: error - response payload", the_dict['cod'])
 
         try:
-            current = Weather.from_dict(the_dict["current"])
+            # OneCall 3 API allows current or a single historical item.
+            if 'current' in the_dict:
+                current = Weather.from_dict(the_dict['current'])
+            elif 'data' in the_dict and the_dict['data'] is not None:
+                current = Weather.from_dict(the_dict['data'][0])
+            else:
+                raise exceptions.APIResponseError("OWM API: no current or historical data returned.")
+
             minutely = None
             if "minutely" in the_dict:
                 minutely = [Weather.from_dict(item) for item in the_dict["minutely"]]
